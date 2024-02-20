@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axiosApi from "../axiosApi.tsx";
 
 const Home: React.FC = () => {
     const [meals, setMeals] = useState<any[]>([]);
     const [totalCalories, setTotalCalories] = useState<number>(0);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchMeals();
@@ -50,13 +51,16 @@ const Home: React.FC = () => {
         }
     };
 
+    const handleEditMeal = (mealId: string) => {
+        navigate(`/editMeal/${mealId}`);
+    };
 
     return (
         <div>
             <div className="flex justify-between border-2 h-12 items-center">
                 <h3 className="text-2xl ml-10">Total calories: {totalCalories}</h3>
                 <button className="w-32 bg-amber-200 mr-10 h-8">
-                    <Link to="/MealForm">Add new meal</Link>
+                    <Link to="/addMeal">Add new meal</Link>
                 </button>
             </div>
             {isLoading ? (
@@ -74,7 +78,7 @@ const Home: React.FC = () => {
                                 <button onClick={() => handleDeleteMeal(meal.id)}>
                                     <span className="material-symbols-outlined">Delete</span>
                                 </button>
-                                <button>
+                                <button onClick={() => handleEditMeal(meal.id)}>
                                     <span className="material-symbols-outlined">Edit</span>
                                 </button>
                             </div>
