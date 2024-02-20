@@ -2,6 +2,7 @@ import './App.css'
 import Navbar from "./components/Navbar.tsx";
 import {Route, Routes} from "react-router-dom";
 import Home from "./components/Home.tsx";
+import MealForm from "./components/mealForm.tsx";
 
 function App() {
 
@@ -10,6 +11,7 @@ function App() {
         <Navbar/>
         <Routes>
             <Route path="/" element={<Home/>}/>
+            <Route path="/mealForm" element={<MealForm/>} />
         </Routes>
      </div>
   )
