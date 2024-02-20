@@ -1,6 +1,5 @@
-import React from "react";
 
-const MealForm: React.FC = () => {
+const MealForm = () => {
     return (
         <div>
             <div className="w-80">

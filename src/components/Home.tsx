@@ -11,23 +11,40 @@ const Home: React.FC = () => {
         fetchMeals();
     }, []);
 
+    useEffect(() => {
+        let total = 0;
+        for (const meal of meals) {
+            total += meal.calories;
+        }
+        setTotalCalories(total);
+    }, [meals]);
+
     const fetchMeals = async () => {
         try {
             setIsLoading(true);
             const response = await axiosApi.get('/meals.json');
             const fetchedMeals = [];
-            let total = 0;
             for (const key in response.data) {
                 fetchedMeals.push({
                     id: key,
                     ...response.data[key]
                 });
-                total += response.data[key].calories;
             }
             setMeals(fetchedMeals);
-            setTotalCalories(total);
         } catch (error) {
             console.error('Error fetching meals:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleDeleteMeal = async (mealId: string) => {
+        try {
+            setIsLoading(true);
+            await axiosApi.delete(`/meals/${mealId}.json`);
+            await fetchMeals();
+        } catch (error) {
+            console.error('Error deleting meal:', error);
         } finally {
             setIsLoading(false);
         }
@@ -52,6 +69,14 @@ const Home: React.FC = () => {
                                 <p className="ml-1 mt-1 text-gray-400 text-2xl">{meal.time}:</p>
                                 <p className="ml-1 mt-1 text-2xl">{meal.description}</p>
                                 <p className="ml-1 mt-1 font-bold" >{meal.calories} kcal</p>
+                            </div>
+                            <div className="flex flex-col items-end mr-5 mt-6">
+                                <button onClick={() => handleDeleteMeal(meal.id)}>
+                                    <span className="material-symbols-outlined">Delete</span>
+                                </button>
+                                <button>
+                                    <span className="material-symbols-outlined">Edit</span>
+                                </button>
                             </div>
                         </div>
                     </div>
