@@ -59,7 +59,7 @@ const Home: React.FC = () => {
         <div>
             <div className="flex justify-between border-2 h-12 items-center">
                 <h3 className="text-2xl ml-10">Total calories: {totalCalories}</h3>
-                <button className="w-32 bg-amber-200 mr-10 h-8">
+                <button className="w-32 bg-blue-400 mr-10 h-8">
                     <Link to="/addMeal">Add new meal</Link>
                 </button>
             </div>
@@ -67,10 +67,10 @@ const Home: React.FC = () => {
                 <p>Loading...</p>
             ) : (
                 meals.map(meal => (
-                    <div className="border-2 border-black rounded-md mt-2" key={meal.id}>
+                    <div className="border-2 border-black rounded-md mt-2 bg-amber-200" key={meal.id}>
                         <div className="flex justify-between">
                             <div>
-                                <p className="ml-1 mt-1 text-gray-400 text-2xl">{meal.time}:</p>
+                                <p className="ml-1 mt-1 text-gray-500 text-2xl">{meal.time}:</p>
                                 <p className="ml-1 mt-1 text-2xl">{meal.description}</p>
                                 <p className="ml-1 mt-1 font-bold" >{meal.calories} kcal</p>
                             </div>
